@@ -37,6 +37,6 @@ for fitxer in fitxers:
 dades_resultants = pd.concat(dades_totals, ignore_index=True)
 
 # Guardar a un nou CSV
-dades_resultants.to_csv("dades_processades.csv", index=False)
+dades_resultants.to_csv("../Extraccio/dades_processades.csv", index=False)
 
-print("Processament complet. Dades guardades a dades_processades.csv")
+print("Processament complet. Dades guardades a ../Extraccio/dades_processades.csv")
