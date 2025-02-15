@@ -1,4 +1,4 @@
-# 📌 Nom del Prototip
+# 📌 Sistema de predicció per la reducció d'emissions.
 
 L’impacte invisible de la contaminació de l’aire. Una eina per entendre i millorar la qualitat de l’aire.
 
