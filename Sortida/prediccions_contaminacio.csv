@@ -1,226 +1,26 @@
 estacio,contaminant,dia,mes,any,prediccio
-Tarragona (Bonavista),NOX,16,2,2025,4.58
-Tarragona (Bonavista),H2S,16,2,2025,1.01
-Tarragona (Bonavista),PM1,16,2,2025,0.89
-Tarragona (Bonavista),NO,16,2,2025,1.21
-Tarragona (Bonavista),NO2,16,2,2025,3.14
-Tarragona (Bonavista),PM10,16,2,2025,4.19
-Tarragona (Bonavista),PM2.5,16,2,2025,1.85
-Tarragona (Bonavista),SO2,16,2,2025,1.06
-Tarragona (Parc de la Ciutat),SO2,16,2,2025,1.63
-Tarragona (Parc de la Ciutat),H2S,16,2,2025,1.12
-Tarragona (Parc de la Ciutat),NOX,16,2,2025,9.68
-Tarragona (Parc de la Ciutat),CO,16,2,2025,210.78
-Tarragona (Parc de la Ciutat),NO,16,2,2025,1.25
-Tarragona (Parc de la Ciutat),NO2,16,2,2025,6.69
-Tarragona (Parc de la Ciutat),O3,16,2,2025,2.05
-Tarragona (Sant Salvador),NO,16,2,2025,1.88
-Tarragona (Sant Salvador),H2S,16,2,2025,1.12
-Tarragona (Sant Salvador),SO2,16,2,2025,1.4
-Tarragona (Sant Salvador),NOX,16,2,2025,8.42
-Tarragona (Sant Salvador),NO2,16,2,2025,5.88
-Tarragona (Universitat Laboral),NO2,16,2,2025,5.69
-Tarragona (Universitat Laboral),NOX,16,2,2025,7.68
-Tarragona (Universitat Laboral),SO2,16,2,2025,1.01
-Tarragona (Universitat Laboral),H2S,16,2,2025,1.17
-Tarragona (Universitat Laboral),NO,16,2,2025,1.07
-Tarragona (Bonavista),NOX,24,2,2025,5.33
-Tarragona (Bonavista),H2S,24,2,2025,1.01
-Tarragona (Bonavista),PM1,24,2,2025,0.96
-Tarragona (Bonavista),NO,24,2,2025,1.14
-Tarragona (Bonavista),NO2,24,2,2025,3.34
-Tarragona (Bonavista),PM10,24,2,2025,4.58
-Tarragona (Bonavista),PM2.5,24,2,2025,1.85
-Tarragona (Bonavista),SO2,24,2,2025,1.08
-Tarragona (Parc de la Ciutat),SO2,24,2,2025,1.59
-Tarragona (Parc de la Ciutat),H2S,24,2,2025,1.11
-Tarragona (Parc de la Ciutat),NOX,24,2,2025,7.89
-Tarragona (Parc de la Ciutat),CO,24,2,2025,207.99
-Tarragona (Parc de la Ciutat),NO,24,2,2025,1.23
-Tarragona (Parc de la Ciutat),NO2,24,2,2025,7.37
-Tarragona (Parc de la Ciutat),O3,24,2,2025,2.25
-Tarragona (Sant Salvador),NO,24,2,2025,1.69
-Tarragona (Sant Salvador),H2S,24,2,2025,1.1
-Tarragona (Sant Salvador),SO2,24,2,2025,1.49
-Tarragona (Sant Salvador),NOX,24,2,2025,8.38
-Tarragona (Sant Salvador),NO2,24,2,2025,6.34
-Tarragona (Universitat Laboral),NO2,24,2,2025,5.46
-Tarragona (Universitat Laboral),NOX,24,2,2025,7.86
-Tarragona (Universitat Laboral),SO2,24,2,2025,1.01
-Tarragona (Universitat Laboral),H2S,24,2,2025,1.13
-Tarragona (Universitat Laboral),NO,24,2,2025,0.97
-Tarragona (Bonavista),NOX,27,2,2025,4.35
-Tarragona (Bonavista),H2S,27,2,2025,1.0
-Tarragona (Bonavista),PM1,27,2,2025,0.97
-Tarragona (Bonavista),NO,27,2,2025,1.07
-Tarragona (Bonavista),NO2,27,2,2025,3.2
-Tarragona (Bonavista),PM10,27,2,2025,4.0
-Tarragona (Bonavista),PM2.5,27,2,2025,1.58
-Tarragona (Bonavista),SO2,27,2,2025,1.19
-Tarragona (Parc de la Ciutat),SO2,27,2,2025,1.69
-Tarragona (Parc de la Ciutat),H2S,27,2,2025,1.11
-Tarragona (Parc de la Ciutat),NOX,27,2,2025,7.35
-Tarragona (Parc de la Ciutat),CO,27,2,2025,205.63
-Tarragona (Parc de la Ciutat),NO,27,2,2025,1.1
-Tarragona (Parc de la Ciutat),NO2,27,2,2025,8.55
-Tarragona (Parc de la Ciutat),O3,27,2,2025,2.51
-Tarragona (Sant Salvador),NO,27,2,2025,1.6
-Tarragona (Sant Salvador),H2S,27,2,2025,1.11
-Tarragona (Sant Salvador),SO2,27,2,2025,1.38
-Tarragona (Sant Salvador),NOX,27,2,2025,7.84
-Tarragona (Sant Salvador),NO2,27,2,2025,6.12
-Tarragona (Universitat Laboral),NO2,27,2,2025,5.73
-Tarragona (Universitat Laboral),NOX,27,2,2025,7.73
-Tarragona (Universitat Laboral),SO2,27,2,2025,1.0
-Tarragona (Universitat Laboral),H2S,27,2,2025,1.14
-Tarragona (Universitat Laboral),NO,27,2,2025,1.02
-Tarragona (Bonavista),NOX,25,2,2025,4.44
-Tarragona (Bonavista),H2S,25,2,2025,1.01
-Tarragona (Bonavista),PM1,25,2,2025,0.96
-Tarragona (Bonavista),NO,25,2,2025,1.05
-Tarragona (Bonavista),NO2,25,2,2025,2.75
-Tarragona (Bonavista),PM10,25,2,2025,3.32
-Tarragona (Bonavista),PM2.5,25,2,2025,1.6
-Tarragona (Bonavista),SO2,25,2,2025,1.01
-Tarragona (Parc de la Ciutat),SO2,25,2,2025,1.62
-Tarragona (Parc de la Ciutat),H2S,25,2,2025,1.07
-Tarragona (Parc de la Ciutat),NOX,25,2,2025,6.81
-Tarragona (Parc de la Ciutat),CO,25,2,2025,204.81
-Tarragona (Parc de la Ciutat),NO,25,2,2025,1.13
-Tarragona (Parc de la Ciutat),NO2,25,2,2025,7.39
-Tarragona (Parc de la Ciutat),O3,25,2,2025,2.05
-Tarragona (Sant Salvador),NO,25,2,2025,1.41
-Tarragona (Sant Salvador),H2S,25,2,2025,1.1
-Tarragona (Sant Salvador),SO2,25,2,2025,1.36
-Tarragona (Sant Salvador),NOX,25,2,2025,7.28
-Tarragona (Sant Salvador),NO2,25,2,2025,5.54
-Tarragona (Universitat Laboral),NO2,25,2,2025,5.05
-Tarragona (Universitat Laboral),NOX,25,2,2025,5.99
-Tarragona (Universitat Laboral),SO2,25,2,2025,1.0
-Tarragona (Universitat Laboral),H2S,25,2,2025,1.14
-Tarragona (Universitat Laboral),NO,25,2,2025,1.08
-Tarragona (Bonavista),NOX,28,2,2025,5.01
-Tarragona (Bonavista),H2S,28,2,2025,1.0
-Tarragona (Bonavista),PM1,28,2,2025,1.01
-Tarragona (Bonavista),NO,28,2,2025,1.05
-Tarragona (Bonavista),NO2,28,2,2025,2.56
-Tarragona (Bonavista),PM10,28,2,2025,3.21
-Tarragona (Bonavista),PM2.5,28,2,2025,1.49
-Tarragona (Bonavista),SO2,28,2,2025,1.08
-Tarragona (Parc de la Ciutat),SO2,28,2,2025,1.63
-Tarragona (Parc de la Ciutat),H2S,28,2,2025,1.09
-Tarragona (Parc de la Ciutat),NOX,28,2,2025,8.78
-Tarragona (Parc de la Ciutat),CO,28,2,2025,204.68
-Tarragona (Parc de la Ciutat),NO,28,2,2025,1.07
-Tarragona (Parc de la Ciutat),NO2,28,2,2025,7.52
-Tarragona (Parc de la Ciutat),O3,28,2,2025,2.8
-Tarragona (Sant Salvador),NO,28,2,2025,1.5
-Tarragona (Sant Salvador),H2S,28,2,2025,1.1
-Tarragona (Sant Salvador),SO2,28,2,2025,1.22
-Tarragona (Sant Salvador),NOX,28,2,2025,7.85
-Tarragona (Sant Salvador),NO2,28,2,2025,5.98
-Tarragona (Universitat Laboral),NO2,28,2,2025,5.15
-Tarragona (Universitat Laboral),NOX,28,2,2025,7.13
-Tarragona (Universitat Laboral),SO2,28,2,2025,1.0
-Tarragona (Universitat Laboral),H2S,28,2,2025,1.13
-Tarragona (Universitat Laboral),NO,28,2,2025,1.03
-Tarragona (Bonavista),NOX,22,2,2025,4.66
-Tarragona (Bonavista),H2S,22,2,2025,1.01
-Tarragona (Bonavista),PM1,22,2,2025,1.0
-Tarragona (Bonavista),NO,22,2,2025,1.09
-Tarragona (Bonavista),NO2,22,2,2025,2.78
-Tarragona (Bonavista),PM10,22,2,2025,3.55
-Tarragona (Bonavista),PM2.5,22,2,2025,1.64
-Tarragona (Bonavista),SO2,22,2,2025,1.05
-Tarragona (Parc de la Ciutat),SO2,22,2,2025,1.65
-Tarragona (Parc de la Ciutat),H2S,22,2,2025,1.09
-Tarragona (Parc de la Ciutat),NOX,22,2,2025,7.11
-Tarragona (Parc de la Ciutat),CO,22,2,2025,203.83
-Tarragona (Parc de la Ciutat),NO,22,2,2025,1.09
-Tarragona (Parc de la Ciutat),NO2,22,2,2025,7.17
-Tarragona (Parc de la Ciutat),O3,22,2,2025,2.76
-Tarragona (Sant Salvador),NO,22,2,2025,1.45
-Tarragona (Sant Salvador),H2S,22,2,2025,1.12
-Tarragona (Sant Salvador),SO2,22,2,2025,1.27
-Tarragona (Sant Salvador),NOX,22,2,2025,8.54
-Tarragona (Sant Salvador),NO2,22,2,2025,5.25
-Tarragona (Universitat Laboral),NO2,22,2,2025,5.23
-Tarragona (Universitat Laboral),NOX,22,2,2025,6.75
-Tarragona (Universitat Laboral),SO2,22,2,2025,1.0
-Tarragona (Universitat Laboral),H2S,22,2,2025,1.06
-Tarragona (Universitat Laboral),NO,22,2,2025,1.18
-Tarragona (Bonavista),NOX,26,2,2025,3.54
-Tarragona (Bonavista),H2S,26,2,2025,1.0
-Tarragona (Bonavista),PM1,26,2,2025,1.04
-Tarragona (Bonavista),NO,26,2,2025,1.09
-Tarragona (Bonavista),NO2,26,2,2025,2.47
-Tarragona (Bonavista),PM10,26,2,2025,3.1
-Tarragona (Bonavista),PM2.5,26,2,2025,1.59
-Tarragona (Bonavista),SO2,26,2,2025,1.08
-Tarragona (Parc de la Ciutat),SO2,26,2,2025,1.38
-Tarragona (Parc de la Ciutat),H2S,26,2,2025,1.08
-Tarragona (Parc de la Ciutat),NOX,26,2,2025,6.52
-Tarragona (Parc de la Ciutat),CO,26,2,2025,205.66
-Tarragona (Parc de la Ciutat),NO,26,2,2025,1.09
-Tarragona (Parc de la Ciutat),NO2,26,2,2025,7.25
-Tarragona (Parc de la Ciutat),O3,26,2,2025,2.89
-Tarragona (Sant Salvador),NO,26,2,2025,1.48
-Tarragona (Sant Salvador),H2S,26,2,2025,1.1
-Tarragona (Sant Salvador),SO2,26,2,2025,1.28
-Tarragona (Sant Salvador),NOX,26,2,2025,7.5
-Tarragona (Sant Salvador),NO2,26,2,2025,5.39
-Tarragona (Universitat Laboral),NO2,26,2,2025,4.87
-Tarragona (Universitat Laboral),NOX,26,2,2025,6.73
-Tarragona (Universitat Laboral),SO2,26,2,2025,1.0
-Tarragona (Universitat Laboral),H2S,26,2,2025,1.06
-Tarragona (Universitat Laboral),NO,26,2,2025,1.13
-Tarragona (Bonavista),NOX,19,2,2025,3.46
-Tarragona (Bonavista),H2S,19,2,2025,1.0
-Tarragona (Bonavista),PM1,19,2,2025,0.97
-Tarragona (Bonavista),NO,19,2,2025,1.09
-Tarragona (Bonavista),NO2,19,2,2025,2.84
-Tarragona (Bonavista),PM10,19,2,2025,2.96
-Tarragona (Bonavista),PM2.5,19,2,2025,1.26
-Tarragona (Bonavista),SO2,19,2,2025,1.01
-Tarragona (Parc de la Ciutat),SO2,19,2,2025,1.43
-Tarragona (Parc de la Ciutat),H2S,19,2,2025,1.07
-Tarragona (Parc de la Ciutat),NOX,19,2,2025,7.25
-Tarragona (Parc de la Ciutat),CO,19,2,2025,204.31
-Tarragona (Parc de la Ciutat),NO,19,2,2025,1.12
-Tarragona (Parc de la Ciutat),NO2,19,2,2025,7.14
-Tarragona (Parc de la Ciutat),O3,19,2,2025,3.02
-Tarragona (Sant Salvador),NO,19,2,2025,1.45
-Tarragona (Sant Salvador),H2S,19,2,2025,1.11
-Tarragona (Sant Salvador),SO2,19,2,2025,1.24
-Tarragona (Sant Salvador),NOX,19,2,2025,7.97
-Tarragona (Sant Salvador),NO2,19,2,2025,5.34
-Tarragona (Universitat Laboral),NO2,19,2,2025,5.0
-Tarragona (Universitat Laboral),NOX,19,2,2025,7.18
-Tarragona (Universitat Laboral),SO2,19,2,2025,1.01
-Tarragona (Universitat Laboral),H2S,19,2,2025,1.06
-Tarragona (Universitat Laboral),NO,19,2,2025,1.06
-Tarragona (Bonavista),NOX,17,2,2025,4.53
-Tarragona (Bonavista),H2S,17,2,2025,1.0
-Tarragona (Bonavista),PM1,17,2,2025,0.96
-Tarragona (Bonavista),NO,17,2,2025,1.05
-Tarragona (Bonavista),NO2,17,2,2025,2.77
-Tarragona (Bonavista),PM10,17,2,2025,2.54
-Tarragona (Bonavista),PM2.5,17,2,2025,1.28
-Tarragona (Bonavista),SO2,17,2,2025,1.05
-Tarragona (Parc de la Ciutat),SO2,17,2,2025,1.41
-Tarragona (Parc de la Ciutat),H2S,17,2,2025,1.09
-Tarragona (Parc de la Ciutat),NOX,17,2,2025,6.87
-Tarragona (Parc de la Ciutat),CO,17,2,2025,203.84
-Tarragona (Parc de la Ciutat),NO,17,2,2025,1.07
-Tarragona (Parc de la Ciutat),NO2,17,2,2025,7.15
-Tarragona (Parc de la Ciutat),O3,17,2,2025,3.09
-Tarragona (Sant Salvador),NO,17,2,2025,1.41
-Tarragona (Sant Salvador),H2S,17,2,2025,1.12
-Tarragona (Sant Salvador),SO2,17,2,2025,1.2
-Tarragona (Sant Salvador),NOX,17,2,2025,7.49
-Tarragona (Sant Salvador),NO2,17,2,2025,5.47
-Tarragona (Universitat Laboral),NO2,17,2,2025,4.93
-Tarragona (Universitat Laboral),NOX,17,2,2025,7.31
-Tarragona (Universitat Laboral),SO2,17,2,2025,1.01
-Tarragona (Universitat Laboral),H2S,17,2,2025,1.04
-Tarragona (Universitat Laboral),NO,17,2,2025,1.06
+Tarragona (Bonavista),NOX,21,2,2025,4.67
+Tarragona (Bonavista),H2S,21,2,2025,1.0
+Tarragona (Bonavista),PM1,21,2,2025,0.89
+Tarragona (Bonavista),NO,21,2,2025,1.22
+Tarragona (Bonavista),NO2,21,2,2025,3.2
+Tarragona (Bonavista),PM10,21,2,2025,4.29
+Tarragona (Bonavista),PM2.5,21,2,2025,1.87
+Tarragona (Bonavista),SO2,21,2,2025,1.04
+Tarragona (Parc de la Ciutat),SO2,21,2,2025,1.63
+Tarragona (Parc de la Ciutat),H2S,21,2,2025,1.12
+Tarragona (Parc de la Ciutat),NOX,21,2,2025,10.25
+Tarragona (Parc de la Ciutat),CO,21,2,2025,210.81
+Tarragona (Parc de la Ciutat),NO,21,2,2025,1.29
+Tarragona (Parc de la Ciutat),NO2,21,2,2025,6.65
+Tarragona (Parc de la Ciutat),O3,21,2,2025,1.8
+Tarragona (Sant Salvador),NO,21,2,2025,1.9
+Tarragona (Sant Salvador),H2S,21,2,2025,1.12
+Tarragona (Sant Salvador),SO2,21,2,2025,1.39
+Tarragona (Sant Salvador),NOX,21,2,2025,8.45
+Tarragona (Sant Salvador),NO2,21,2,2025,5.87
+Tarragona (Universitat Laboral),NO2,21,2,2025,6.02
+Tarragona (Universitat Laboral),NOX,21,2,2025,8.08
+Tarragona (Universitat Laboral),SO2,21,2,2025,1.01
+Tarragona (Universitat Laboral),H2S,21,2,2025,1.14
+Tarragona (Universitat Laboral),NO,21,2,2025,1.09
