@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa de Contaminación en Tarragona</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+        }
+        #map {
+            height: 70%;
+            width: 80%;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #contaminacion-dropdown {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+        }
+        #contaminacion-dropdown i {
+            margin-left: 5px;
+        }
+        #contaminacion-options {
+            background: white;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            margin: 0;
+            display: none;
+            list-style-type: none;
+            position: absolute;
+            z-index: 1000;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #contaminacion-options li {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #contaminacion-options li:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        #datetime-picker {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        #datetime-picker label {
+            margin-right: 5px;
+        }
+        #datetime-picker input, #datetime-picker select {
+            margin: 0 5px;
+            padding: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        #ver-contaminacion {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        #ver-contaminacion:hover {
+            background: #218838;
+        }
+        #selected-contaminant {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <div style="position: relative;">
+            <div id="contaminacion-dropdown">Seleccionar tipo de contaminación <i class="fas fa-chevron-down"></i></div>
+            <ul id="contaminacion-options">
+                <li>CO</li>
+                <li>H2S</li>
+                <li>NO</li>
+                <li>NO2</li>
+                <li>NOX</li>
+                <li>O3</li>
+                <li>PM1</li>
+                <li>PM10</li>
+                <li>PM2.5</li>
+                <li>SO2</li>
+            </ul>
+        </div>
+        <div id="selected-contaminant">Tipo de contaminación seleccionado: Ninguno</div>
+        <div id="datetime-picker">
+            <label for="date">Fecha:</label>
+            <input type="date" id="date" name="date">
+            <label for="hour">Hora:</label>
+            <select id="hour" name="hour">
+                <option value="00">00</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+            </select>
+        </div>
+        <button id="ver-contaminacion">Ver Contaminación</button>
+    </div>
+    <div id="map"></div>
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <script>
+        // Inicializar el mapa y centrarse en la provincia de Tarragona
+        var map = L.map('map').setView([41.1167, 1.25], 10);
+
+        // Añadir una capa de mapa (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var selectedContaminant = null;
+        var heatLayer = null;
+
+        // Funcionalidad para desplegar y seleccionar opciones de contaminación
+        document.getElementById('contaminacion-dropdown').addEventListener('click', function() {
+            var options = document.getElementById('contaminacion-options');
+            options.style.display = (options.style.display === 'none' || options.style.display === '') ? 'block' : 'none';
+        });
+
+        document.querySelectorAll('#contaminacion-options li').forEach(function(item) {
+            item.addEventListener('click', function() {
+                selectedContaminant = this.innerText;
+                document.getElementById('selected-contaminant').innerText = 'Tipo de contaminación seleccionado: ' + selectedContaminant;
+                document.getElementById('contaminacion-options').style.display = 'none';
+            });
+        });
+
+        document.getElementById('ver-contaminacion').addEventListener('click', function() {
+            var date = document.getElementById('date').value;
+            var hour = document.getElementById('hour').value;
+            if (selectedContaminant && date && hour) {
+                cargarDatos(selectedContaminant, date, hour);
+            } else {
+                alert('Por favor, selecciona el tipo de contaminación, fecha y hora.');
+            }
+        });
+
+        function cargarDatos(contaminant, date, hour) {
+            var datasets = [
+                'Dataset/bonavista.csv',
+                'Dataset/parcdelaciutat.csv',
+                'Dataset/santsalvador.csv',
+                'Dataset/universitatlaboral.csv'
+            ];
+
+            var allData = [];
+
+            var promises = datasets.map(function(dataset) {
+                return new Promise(function(resolve, reject) {
+                    Papa.parse(dataset, {
+                        download: true,
+                        header: true,
+                        complete: function(results) {
+                            var data = results.data.filter(function(row) {
+                                return row.contaminant === contaminant && row.data.startsWith(date);
+                            });
+                            resolve(data);
+                        },
+                        error: function(error) {
+                            reject(error);
+                        }
+                    });
+                });
+            });
+
+            Promise.all(promises).then(function(results) {
+                results.forEach(function(data) {
+                    allData = allData.concat(data);
+                });
+                generarMapaCalor(allData, hour);
+            }).catch(function(error) {
+                console.error("Error al cargar los datos: ", error);
+            });
+        }
+
+        function generarMapaCalor(data, hour) {
+            var heatData = [];
+            
+            data.forEach(function(row) {
+                var value = parseFloat(row['h' + hour]);
+                if (!isNaN(value)) {
+                    heatData.push([parseFloat(row.latitud), parseFloat(row.longitud), value]);
+                }
+            });
+
+            if (heatLayer) {
+                map.removeLayer(heatLayer);
+            }
+
+            heatLayer = L.heatLayer(heatData, { 
+                radius: 25, 
+                blur: 15, 
+                maxZoom: 17,
+                gradient: {
+                    0.1: 'blue',
+                    0.2: 'lime',
+                    0.4: 'yellow',
+                    0.6: 'orange',
+                    0.8: 'red'
+                }
+            }).addTo(map);
+
+            map.on('zoomend', function() {
+                var zoomLevel = map.getZoom();
+                var scale = 1 + (zoomLevel - 10) * 0.1;
+                heatLayer.setOptions({ radius: 25 * scale, blur: 15 * scale });
+            });
+        }
+    </script>
+</body>
+</html>
