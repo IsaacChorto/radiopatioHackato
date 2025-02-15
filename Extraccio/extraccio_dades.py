@@ -1,9 +1,9 @@
 import os
 import pandas as pd
 import glob
-from catboost import CatBoostClassifier
+import matplotlib.pyplot as plt
+from catboost import CatBoostRegressor
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
 
 # Defineix la ruta relativa a la carpeta Dataset des de Extraccions
 dataset_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../Dataset")
@@ -28,9 +28,12 @@ for fitxer in fitxers:
     # Seleccionar columnes necessàries
     df_seleccionat = df[["nom_estacio", "data", "contaminant"] + [f"h{i:02}" for i in range(1, 25)]]
     
-    df_seleccionat = df_seleccionat.copy()  # Afegir aquesta línia per evitar l'error
+    df_seleccionat = df_seleccionat.copy()
 
-    df_seleccionat.loc[:, "data"] = df_seleccionat["data"].str.split("T").str[0]  # Elimina la part de l'hora
+    # Convertir unitats de CO de mg/m³ a µg/m³
+    df_seleccionat.loc[df_seleccionat["contaminant"] == "co", [f"h{i:02}" for i in range(1, 25)]] *= 1000
+
+    df_seleccionat.loc[:, "data"] = df_seleccionat["data"].str.split("T").str[0]  
     df_seleccionat[["any", "mes", "dia"]] = df_seleccionat["data"].str.split("-", expand=True)
 
     df_seleccionat.loc[:, "any"] = pd.to_numeric(df_seleccionat["any"], errors="coerce")
@@ -49,37 +52,64 @@ for fitxer in fitxers:
 # Concatenar totes les dades
 dades_resultants = pd.concat(dades_totals, ignore_index=True)
 
-# Codificar els contaminants a valors numèrics
-label_encoder = LabelEncoder()
-dades_resultants["contaminant_codificat"] = label_encoder.fit_transform(dades_resultants["contaminant"])
+# Separar per nom d'estació
+estacions = dades_resultants["nom_estacio"].unique()
 
-# Separar features (X) i variable objectiu (y)
-X = dades_resultants[["dia", "mes", "any", "mitjana_mati", "mitjana_tarda", "mitjana_nit"]]
-y = dades_resultants["contaminant_codificat"]
+for estacio in estacions:
+    print(f"🔹 Processant estació: {estacio}")
 
-# Dividir les dades en entrenament i test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # Filtrar dades per estació
+    dades_estacio = dades_resultants[dades_resultants["nom_estacio"] == estacio].copy()
 
-# Entrenar un model CatBoost per predir contaminants
-model = CatBoostClassifier(iterations=1000, learning_rate=0.05, depth=10, cat_features=[], verbose=100)
-model.fit(X_train, y_train)
+    # Separar per contaminant
+    contaminants = dades_estacio["contaminant"].unique()
 
-# Funció per fer la predicció en una data específica
-def predir_contaminacio(dia, mes, any):
-    entrada = pd.DataFrame([[dia, mes, any, 0, 0, 0]], columns=X.columns)
-    probabilitats = model.predict_proba(entrada)[0]
-    
-    # Obtenir els contaminants predits amb probabilitats
-    contaminant_probabilitat = {label_encoder.inverse_transform([i])[0]: probabilitats[i] for i in range(len(probabilitats))}
-    
-    return contaminant_probabilitat
+    prediccions_contaminacio = {}
 
-# Exemple d'ús: predir contaminants pel 10 de febrer de 2025
-dia_prediccio = 14
-mes_prediccio = 8
-any_prediccio = 2025
+    for contaminant in contaminants:
+        print(f"   ➡ Entrenant model per {contaminant}")
 
-resultats = predir_contaminacio(dia_prediccio, mes_prediccio, any_prediccio)
-print(f"Predicció per {dia_prediccio}/{mes_prediccio}/{any_prediccio}:")
-for contaminant, probabilitat in resultats.items():
-    print(f"{contaminant}: {probabilitat:.2%}")
+        # Filtrar dades per contaminant
+        dades_contaminant = dades_estacio[dades_estacio["contaminant"] == contaminant].copy()
+
+        # Separar features (X) i valors de contaminació (y)
+        X = dades_contaminant[["dia", "mes", "any", "mitjana_mati", "mitjana_tarda", "mitjana_nit"]]
+        y = dades_contaminant["mitjana_mati"]  # Suposant que volem predir la contaminació matinal
+
+        if len(X) < 10:
+            print(f"   ⚠ Poques dades per {contaminant}, es descarta la predicció.")
+            continue
+
+        # Dividir les dades en entrenament i test
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+        # Entrenar un model CatBoost per cada contaminant
+        # Comprovar si hi ha valors NaN
+        if y_train.isna().sum() > 0:
+            print(f"   ⚠ {y_train.isna().sum()} valors NaN trobats a {contaminant}. Es descarten aquestes files.")
+            X_train = X_train.dropna()
+            y_train = y_train[X_train.index]
+
+        # Entrenar el model si queden dades suficients
+        if len(X_train) < 10:
+            print(f"   ⚠ Poques dades vàlides per {contaminant}, es descarta la predicció.")
+            continue
+
+        model = CatBoostRegressor(iterations=500, learning_rate=0.05, depth=6, verbose=100)
+        model.fit(X_train, y_train)
+
+
+        # Fer predicció per una data específica
+        dia_prediccio = 14
+        mes_prediccio = 8
+        any_prediccio = 2025
+
+        entrada = pd.DataFrame([[dia_prediccio, mes_prediccio, any_prediccio, 0, 0, 0]], columns=X.columns)
+        prediccio = model.predict(entrada)[0]
+
+        prediccions_contaminacio[contaminant] = prediccio
+
+    # Mostrar resultats
+    print(f"📊 Predicció per {estacio} el {dia_prediccio}/{mes_prediccio}/{any_prediccio}:")
+    for contaminant, valor in prediccions_contaminacio.items():
+        print(f"{contaminant}: {valor:.2f} µg/m³")
