@@ -1,27 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Mapa de Contaminación en Tarragona</title>
+    <title>Mapa de contaminació a Tarragona</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         body {
+            background: linear-gradient(135deg, #f0f2f5 0%, #c9d6ff);
             display: flex;
             flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
         }
+
         #map {
-            height: 70%;
-            width: 80%;
-            border: 2px solid #007bff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    height: 85%; /* Aumentado para ocupar más espacio */
+    width: 90%; /* Se amplía para una mejor visualización */
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#consells {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 400px; /* Aumentado para mejor visualización */
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Un poco más de padding */
+    display: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+#consells h3 {
+    font-size: 2em; /* Más grande y destacado */
+    font-weight: bold;
+    text-align: center;
+    color: #ff758c;
+    margin-bottom: 15px;
+    
+}
+
+#consells ul {
+    padding: 0;
+    list-style: none;
+}
+
+#consells li {
+    font-size: 1em; /* Letra más grande */
+    font-weight: bold;
+    padding: 10px 0;
+    color: #333;
+}
+#toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 50px;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#toggle-btn:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+
+#toggle-btn i {
+    transition: transform 0.3s ease;
+}
+
+#toggle-btn:hover i {
+    transform: rotate(360deg);
+}
+
+#consells.show {
+    display: block;
+    transform: translateY(-10px);
+}
+
+
         #controls {
             display: flex;
             flex-direction: row;
@@ -34,6 +107,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         #contaminacion-dropdown {
             background: #007bff;
             color: white;
@@ -45,9 +119,11 @@
             display: flex;
             align-items: center;
         }
+
         #contaminacion-dropdown i {
             margin-left: 5px;
         }
+
         #contaminacion-options {
             background: white;
             border: 1px solid #ced4da;
@@ -60,52 +136,94 @@
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         #contaminacion-options li {
             padding: 5px 10px;
             cursor: pointer;
         }
+
         #contaminacion-options li:hover {
             background-color: #007bff;
             color: white;
         }
+
         #datetime-picker {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
+
         #datetime-picker label {
             margin-right: 5px;
         }
-        #datetime-picker input, #datetime-picker select {
+
+        #contaminacion-dropdown {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        #contaminacion-dropdown:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+        }
+
+        #datetime-picker input,
+        #datetime-picker select {
             margin: 0 5px;
             padding: 5px;
             border: 1px solid #ced4da;
             border-radius: 5px;
             font-size: 1em;
         }
-        #ver-contaminacion {
-            background: #28a745;
+
+        #ver-contaminacion,
+        #mostrar-prediccio {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 10px 20px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 25px;
             font-size: 1em;
+            transition: background 0.3s ease;
         }
-        #ver-contaminacion:hover {
-            background: #218838;
+
+        #ver-contaminacion:hover,
+        #mostrar-prediccio:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
         }
+
         #selected-contaminant {
             margin-bottom: 10px;
             font-weight: bold;
             color: #007bff;
         }
+
+        #ver-contaminacion,
+        #mostrar-prediccio {
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        #ver-contaminacion:hover,
+        #mostrar-prediccio:hover {
+            transform: scale(1.05);
+        }
+
     </style>
 </head>
+
 <body>
     <div id="controls">
         <div style="position: relative;">
-            <div id="contaminacion-dropdown">Seleccionar tipo de contaminación <i class="fas fa-chevron-down"></i></div>
+            <div id="contaminacion-dropdown">Seleccionar tipus de contaminació <i class="fas fa-chevron-down"></i></div>
             <ul id="contaminacion-options">
                 <li>CO</li>
                 <li>H2S</li>
@@ -119,46 +237,49 @@
                 <li>SO2</li>
             </ul>
         </div>
-        <div id="selected-contaminant">Tipo de contaminación seleccionado: Ninguno</div>
+        <div id="selected-contaminant">Tipus de contaminació seleccionat: Ningun</div>
         <div id="datetime-picker">
             <label for="date">Fecha:</label>
             <input type="date" id="date" name="date">
-            <label for="hour">Hora:</label>
-            <select id="hour" name="hour">
-                <option value="00">00</option>
-                <option value="01">01</option>
-                <option value="02">02</option>
-                <option value="03">03</option>
-                <option value="04">04</option>
-                <option value="05">05</option>
-                <option value="06">06</option>
-                <option value="07">07</option>
-                <option value="08">08</option>
-                <option value="09">09</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-            </select>
         </div>
-        <button id="ver-contaminacion">Ver Contaminación</button>
+        <button id="ver-contaminacion">Veure Contaminació</button>
+        <button id="mostrar-prediccio">Mostrar Predicció</button>
     </div>
     <div id="map"></div>
-    
+    <button id="toggle-btn"><i class="fas fa-lightbulb"></i> Consells</button>
+    <div id="consells">
+        <h3>Consells Útils</h3>
+        <ul>
+            <li>🚫 Evita zones de trànsit dens: CO, NOX i SO2 es concentren a les avingudes principals. Opta per rutes amb menys trànsit o parcs.</li> 
+            <li>😷 Mascaretes per a l'aire brut: En dies de contaminació alta, les mascaretes amb filtre N95 poden reduir l'exposició a partícules fines.</li> 
+            <li>⏰ Exercici en horaris estratègics: Evita l'activitat física a l'aire lliure durant les hores més contaminades. Matinar o esperar a la nit pot marcar la diferència.</li> 
+            <li>☀ Cuidado amb l'ozó (O3): Augmenta en dies calorosos i solejats, afectant la respiració. Redueix l'exposició en aquestes condicions.</li> 
+            <li>💨 Dies de boira o humitat alta: Les partícules com PM1 i PM2.5 poden romandre més temps a l'aire, augmentant el risc.</li>    </ul>
+    </div>
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
     <script>
+        document.getElementById("toggle-btn").addEventListener("click", function(event) {
+            const consells = document.getElementById("consells");
+            consells.classList.toggle("show");
+            event.stopPropagation(); // Evita que el clic se propague al documento
+        });
+        
+        // Detectar clics fuera de la viñeta de consells para ocultarla
+        document.addEventListener("click", function(event) {
+            const consells = document.getElementById("consells");
+            const toggleBtn = document.getElementById("toggle-btn");
+            
+            if (!consells.contains(event.target) && !toggleBtn.contains(event.target)) {
+                consells.classList.remove("show");
+            }
+        });
+        </script>
+    <script>
+        var markers = []; // Array per guardar els marcatges
+
         // Inicializar el mapa y centrarse en la provincia de Tarragona
         var map = L.map('map').setView([41.1167, 1.25], 10);
 
@@ -171,30 +292,318 @@
         var heatLayer = null;
 
         // Funcionalidad para desplegar y seleccionar opciones de contaminación
-        document.getElementById('contaminacion-dropdown').addEventListener('click', function() {
+        document.getElementById('contaminacion-dropdown').addEventListener('click', function () {
             var options = document.getElementById('contaminacion-options');
             options.style.display = (options.style.display === 'none' || options.style.display === '') ? 'block' : 'none';
         });
 
-        document.querySelectorAll('#contaminacion-options li').forEach(function(item) {
-            item.addEventListener('click', function() {
+        document.querySelectorAll('#contaminacion-options li').forEach(function (item) {
+            item.addEventListener('click', function () {
                 selectedContaminant = this.innerText;
                 document.getElementById('selected-contaminant').innerText = 'Tipo de contaminación seleccionado: ' + selectedContaminant;
                 document.getElementById('contaminacion-options').style.display = 'none';
             });
         });
 
-        document.getElementById('ver-contaminacion').addEventListener('click', function() {
+        document.getElementById('ver-contaminacion').addEventListener('click', function () {
             var date = document.getElementById('date').value;
-            var hour = document.getElementById('hour').value;
-            if (selectedContaminant && date && hour) {
-                cargarDatos(selectedContaminant, date, hour);
+
+            if (selectedContaminant && date !== "") {
+                cargarDatos(selectedContaminant, date);
             } else {
-                alert('Por favor, selecciona el tipo de contaminación, fecha y hora.');
+                alert('Selecciona el tipus de contaminació i la data.');
             }
         });
 
-        function cargarDatos(contaminant, date, hour) {
+
+
+        
+document.getElementById('mostrar-prediccio').addEventListener('click', function(event) {
+    event.preventDefault(); // Evita la recàrrega de la pàgina
+
+    var date = document.getElementById('date').value;
+    var contaminant = selectedContaminant;
+
+    if (selectedContaminant && date) {
+        var dateParts = date.split("-");
+        var dia = parseInt(dateParts[2]);
+        var mes = parseInt(dateParts[1]);
+        var any = parseInt(dateParts[0]);
+
+        // Verifiquem si la data ja existeix al fitxer CSV
+        var existeixData = false;
+
+        // Llegim el fitxer CSV utilitzant PapaParse
+        Papa.parse('Sortida/prediccions_contaminacio.csv', {
+            download: true,
+            header: true,
+            complete: function(results) {
+                // Recorrem totes les files del fitxer CSV
+                results.data.forEach(function(row) {
+                    var diaRow = parseInt(row.dia);
+                    var mesRow = parseInt(row.mes);
+                    var anyRow = parseInt(row.any);
+
+                    // Comprovem si la data de la fila coincideix amb la data seleccionada
+                    if (dia === diaRow && mes === mesRow && any === anyRow) {
+                        existeixData = true;
+                    }
+                });
+
+                if (existeixData) {
+                    // Si la data ja existeix al fitxer, mostrem les dades
+                    console.log("La data ja existeix al fitxer CSV, mostrant dades...");
+                    mostrarPrediccions(dia, mes, any, contaminant);
+                    carregarReduccio();  // Carrega les dades de reducció de contaminació
+                } else {
+                    // Si la data no existeix, fem la crida a l'API
+                    console.log("La data no existeix al fitxer CSV, fent la crida al backend...");
+                    fetch(`http://localhost:5000/obtenir_prediccions?dia=${dia}&mes=${mes}&any=${any}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        prediccions = data;  // Emmagatzema les dades globalment
+                        mostrarPrediccions(dia, mes, any, contaminant); // Crida la funció per mostrar-les
+                        carregarReduccio();  // Carrega les dades de reducció de contaminació
+                    })
+                    .catch(error => {
+                        console.error('Error al carregar les dades:', error);
+                    });
+                }
+            },
+            error: function(error) {
+                console.error('Error al llegir el fitxer CSV:', error);
+            }
+        }
+    
+    
+    );
+    } else {
+        alert('Per favor, selecciona el tipus de contaminació i la data.');
+    }
+});
+
+
+
+window.addEventListener('beforeunload', function(event) {
+    console.log("⚠️ La pàgina s'està recarregant!");
+});
+
+
+function mostrarPrediccions(dia, mes, any, contaminant) {
+    var dataset = 'Sortida/prediccions_contaminacio.csv';  // Únic fitxer de dades
+
+    var allData = [];
+
+
+    // Carreguem i filtrem les dades amb Papa Parse
+    Papa.parse(dataset, {
+        download: true,
+        header: true,
+        complete: function(results) {
+            var data = results.data.filter(function(row) {
+                var diaRow = parseInt(row.dia);
+                var mesRow = parseInt(row.mes);
+                var anyRow = parseInt(row.any);
+
+                // Comprovem que el contaminant i la data coincideixen amb els valors seleccionats
+                return row.contaminant === contaminant && dia === diaRow && mes === mesRow && any === anyRow;
+            });
+
+            if (data.length === 0) {
+                alert('No hi ha dades disponibles per a la data seleccionada i contaminant.');
+                return;
+            }
+
+            // Afegim les dades filtrades a l'array allData
+            allData = data.map(function(row) {
+                // Obtenim les coordenades de l'estació (cal ajustar això amb coordenades reals)
+                var coordinates = getCoordinates(row.estacio);
+                return {
+                    latitud: coordinates.lat,
+                    longitud: coordinates.lng,
+                    valorContaminacio: parseFloat(row.prediccio)  // Valors de contaminació
+                };
+            });
+
+            // Generem el mapa de calor amb les dades filtrades
+            generarMapaCalor1(allData);
+        },
+        error: function(error) {
+            console.error("Error al carregar les dades:", error);
+        }
+    });
+}
+
+// Funció per carregar les dades del CSV de reducció de contaminació
+function carregarReduccio() {
+    console.log("Carregant CSV de reducció de contaminació...");
+    
+    Papa.parse('Sortida/reduccio_contaminacio.csv', {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+            console.log("Dades carregades:", results.data); // Comprovació de dades
+            mostrarReduccio(results.data);
+        },
+        error: function(error) {
+            console.error("Error carregant el CSV: ", error);
+        }
+    });
+}
+
+function obtenirMissatgeConcienciacio(reduccio) {
+    if (reduccio > 2) {
+        return "Gran millora en la qualitat de l'aire!";
+    } else if (reduccio > 1) {
+        return "Una millora notable en la contaminació!";
+    } else if (reduccio > 0.5) {
+        return "Alguna millora, però encara podem millorar!";
+    } else {
+        return "No hi ha reducció significativa en la contaminació.";
+    }
+}
+
+
+
+
+// Funció per mostrar la reducció amb interactivitat
+function mostrarReduccio(data) {
+    data.forEach(row => {
+        var estacio = row['estacio'];
+        var reduccio = parseFloat(row['reduccio_contaminacio']);
+        var valorOriginal = parseFloat(row['contaminacio_original']);  // Obtenir el valor original
+
+        if (!estacio || isNaN(reduccio) || isNaN(valorOriginal)) {
+            console.warn("Dada incorrecta:", row);
+            return;
+        }
+
+        var coordenades = getCoordinates(estacio);
+        if (coordenades) {
+            var millora = valorOriginal - reduccio; // Calcular la millora
+
+            // Definir el missatge de conscienciació
+            var missatgeConcienciacio = obtenirMissatgeConcienciacio(millora);
+
+            // Afegim interactivitat als marcadors
+            L.marker([coordenades.lat, coordenades.lng], {
+                icon: getIcon(valorOriginal, reduccio)
+            }).addTo(map)
+                .bindPopup(`
+                    <b>${estacio}</b><br>
+                    Valor original: ${valorOriginal.toFixed(2)} µg/m³<br>
+                    Reducció: ${reduccio.toFixed(2)} µg/m³<br>
+                    Millora: ${millora.toFixed(2)} µg/m³<br>
+                    Reducció cotxes: 10%<br>
+                    ${missatgeConcienciacio}
+                `)
+                .on('mouseover', function() {
+                    this.openPopup(); // Obre el popup quan el ratolí passa per sobre
+                })
+                .on('mouseout', function() {
+                    this.closePopup(); // Tanca el popup quan el ratolí es retira
+                });
+        } else {
+            console.warn("No s'han trobat coordenades per:", estacio);
+        }
+    });
+}
+
+// Funció per obtenir el missatge de conscienciació segons la millora
+function obtenirMissatgeConcienciacio(millora) {
+    if (millora > 5) {
+        return "Gran millora en la qualitat de l'aire!";
+    } else if (millora > 3) {
+        return "Millora notable en la contaminació!";
+    } else if (millora > 1) {
+        return "Alguna millora, però encara podem millorar!";
+    } else {
+        return "No hi ha millora significativa en la contaminació.";
+    }
+}
+
+function getIcon(valorOriginal, reduccio) {
+    var millora = valorOriginal - reduccio; 
+
+    return L.divIcon({
+        className: 'custom-marker',
+        html: `<div style="
+            border: 2px solid black;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 60px;
+            background-color: white;">
+            ${millora.toFixed(1)} µg/m³
+        </div>`,
+        iconSize: [50, 25]
+    });
+}
+
+// Funció per obtenir coordenades de l'estació (exemple)
+function obtenirCoordenades(estacio) {
+    var coordenades = {
+        "Tarragona (Bonavista)": { lat: 41.11591, lon:1.1919986 },
+        "Tarragona (Parc de la Ciutat)": { lat: 41.1174, lon: 1.2417027},
+        "Tarragona (Sant Salvador)": { lat: 41.15951, lon: 1.2396973 },
+        "Tarragona (Universitat Laboral)": { lat: 41.103706, lon: 1.2007992 }
+    };
+    return coordenades[estacio] || null;
+}
+
+
+function getCoordinates(estacio) {
+    var coordinates = {
+        'Tarragona (Bonavista)': { lat: 41.11591, lng: 1.1919986 },
+        'Tarragona (Parc de la Ciutat)': { lat: 41.1174, lng: 1.2417027 },
+        'Tarragona (Sants Salvador)': { lat: 41.15951, lng: 1.2396973 },  // Exemples, ajustar segons correspongui
+        'Tarragona (Universitat Laboral)': { lat: 41.103706, lng: 1.2007992 }
+    };
+    return coordinates[estacio] || { lat: 0, lng: 0 };  // Valor per defecte si no troba l'estació
+}
+
+function generarMapaCalor1(data) {
+    var heatData = [];
+
+    // Normalització de les dades per mostrar-les correctament en el mapa
+    var minValue = Math.min(...data.map(function(row) { return row.valorContaminacio; }));
+    var maxValue = Math.max(...data.map(function(row) { return row.valorContaminacio; }));
+
+    // Afegir dades de la capa de calor
+    data.forEach(function(row) {
+        var normalizedValue = (row.valorContaminacio - minValue) / (maxValue - minValue);  // Normalització
+        heatData.push([row.latitud, row.longitud, normalizedValue]);
+    });
+
+    // Crear la capa de calor
+    if (heatLayer) {
+        map.removeLayer(heatLayer);
+    }
+
+    heatLayer = L.heatLayer(heatData, {
+        radius: 50, // Mida dels cercles
+        blur: 10,   // Desdibuix
+        maxZoom: 17,
+        minOpacity: 0.2,
+        gradient: {
+            0.0: 'blue',
+            0.2: 'lime',
+            0.4: 'yellow',
+            0.6: 'orange',
+            0.8: 'red',
+            1.0: 'darkred'
+        }
+    }).addTo(map);
+}
+
+
+
+        
+
+        function cargarDatos(contaminant, date) {
             var datasets = [
                 'Dataset/bonavista.csv',
                 'Dataset/parcdelaciutat.csv',
@@ -204,67 +613,123 @@
 
             var allData = [];
 
-            var promises = datasets.map(function(dataset) {
-                return new Promise(function(resolve, reject) {
+            var promises = datasets.map(function (dataset) {
+                return new Promise(function (resolve, reject) {
                     Papa.parse(dataset, {
                         download: true,
                         header: true,
-                        complete: function(results) {
-                            var data = results.data.filter(function(row) {
+                        complete: function (results) {
+                            var data = results.data.filter(function (row) {
                                 return row.contaminant === contaminant && row.data.startsWith(date);
                             });
                             resolve(data);
                         },
-                        error: function(error) {
+                        error: function (error) {
                             reject(error);
                         }
                     });
                 });
             });
 
-            Promise.all(promises).then(function(results) {
-                results.forEach(function(data) {
+            Promise.all(promises).then(function (results) {
+                results.forEach(function (data) {
                     allData = allData.concat(data);
                 });
-                generarMapaCalor(allData, hour);
-            }).catch(function(error) {
-                console.error("Error al cargar los datos: ", error);
+                generarMapaCalor(allData);
+            }).catch(function (error) {
+                console.error("Error al carregar les dades: ", error);
             });
         }
 
-        function generarMapaCalor(data, hour) {
+        function mostrarPrediccion(date) {
+            alert("Mostrant predicció pel dia: " + date);
+            // Aquí podrías agregar el código para mostrar la predicción real
+        }
+
+        function generarMapaCalor(data) {
             var heatData = [];
-            
-            data.forEach(function(row) {
-                var value = parseFloat(row['h' + hour]);
-                if (!isNaN(value)) {
-                    heatData.push([parseFloat(row.latitud), parseFloat(row.longitud), value]);
+
+            // Eliminar marcatges anteriors
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = []; // Reinicialitzar la llista de marcatges
+
+            data.forEach(function (row) {
+                var values = [];
+                for (var i = 1; i <= 24; i++) {
+                    var hourValue = parseFloat(row['h' + (i < 10 ? '0' + i : i)]);
+                    if (!isNaN(hourValue)) {
+                        values.push(hourValue);
+                    }
+                }
+
+                if (values.length > 0) {
+                    var averageValue = values.reduce((a, b) => a + b, 0) / values.length;
+                    heatData.push([parseFloat(row.latitud), parseFloat(row.longitud), averageValue]);
+
+                    // Crear un nou marcador i afegir-lo a la llista
+                    var marker = L.marker([parseFloat(row.latitud), parseFloat(row.longitud)]).addTo(map);
+                    marker.bindPopup(`<b>${row.nom_estacio}</b><br>Contaminant: ${selectedContaminant}<br>Mitjana: ${averageValue.toFixed(2)}`);
+                    markers.push(marker); // Afegir-lo a l'array per poder esborrar-lo després
                 }
             });
 
+            // Si ja existeix una capa de calor, eliminar-la abans d'afegir-ne una de nova
             if (heatLayer) {
                 map.removeLayer(heatLayer);
             }
 
-            heatLayer = L.heatLayer(heatData, { 
-                radius: 25, 
-                blur: 15, 
+            // Crear una nova capa de calor
+            heatLayer = L.heatLayer(heatData, {
+                radius: 50,
+                blur: 10,
                 maxZoom: 17,
+                minOpacity: 0.2,
                 gradient: {
-                    0.1: 'blue',
+                    0.0: 'blue',
                     0.2: 'lime',
                     0.4: 'yellow',
                     0.6: 'orange',
-                    0.8: 'red'
+                    0.8: 'red',
+                    1.0: 'darkred'
                 }
             }).addTo(map);
 
-            map.on('zoomend', function() {
+            // Ajustar la mida dels punts segons el nivell de zoom
+            map.on('zoomend', function () {
                 var zoomLevel = map.getZoom();
                 var scale = 1 + (zoomLevel - 10) * 0.1;
-                heatLayer.setOptions({ radius: 25 * scale, blur: 15 * scale });
+                heatLayer.setOptions({ radius: 30 * scale, blur: 10 * scale });
             });
         }
+
+
     </script>
 </body>
+
+<div id="chart" style="width: 80%; height: 200px; margin-top: 20px;"></div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    function generarGrafic(data) {
+        var dates = data.map(row => row.data);
+        var values = data.map(row => parseFloat(row['h12'])); // Exemple per a les 12:00
+
+        var trace = {
+            x: dates,
+            y: values,
+            type: 'scatter',
+            mode: 'lines+markers',
+            marker: { color: '#007bff' }
+        };
+
+        var layout = {
+            title: 'Evolució de la Contaminació',
+            xaxis: { title: 'Data' },
+            yaxis: { title: 'Nivell de Contaminació' }
+        };
+
+        Plotly.newPlot('chart', [trace], layout);
+    }
+</script>
+
 </html>

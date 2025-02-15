@@ -26,7 +26,7 @@ def calcular_mitjanes(row):
     nit = row[["h19", "h20", "h21", "h22", "h23", "h24", "h01", "h02", "h03", "h04", "h05", "h06"]].mean()
     return pd.Series([mati, tarda, nit], index=["mitjana_mati", "mitjana_tarda", "mitjana_nit"])
 
-def extraccio_dades():
+def extraccio_dades(dia, mes, any):
     # Processar cada fitxer
     for fitxer in fitxers:
         df = pd.read_csv(fitxer)
@@ -102,9 +102,9 @@ def extraccio_dades():
             model.fit(X_train, y_train)
 
             # Fer predicció per una data específica
-            dia_prediccio = 14
-            mes_prediccio = 8
-            any_prediccio = 2025
+            dia_prediccio = dia
+            mes_prediccio = mes
+            any_prediccio = any
 
             entrada = pd.DataFrame([[dia_prediccio, mes_prediccio, any_prediccio, 0, 0, 0]], columns=X.columns)
             prediccio = model.predict(entrada)[0]
@@ -126,5 +126,3 @@ def extraccio_dades():
 
     print(f"\n📂 Prediccions guardades a: {csv_path}")
 
-if __name__ == "__main__":
-    extraccio_dades()
