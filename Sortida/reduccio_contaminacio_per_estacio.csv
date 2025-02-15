@@ -1,5 +1,5 @@
-estacio,reduccio_contaminacio
-Tarragona (Bonavista),1.5381000000000005
-Tarragona (Parc de la Ciutat),21.511266666666668
-Tarragona (Sant Salvador),1.0746
-Tarragona (Universitat Laboral),0.9666000000000001
+estacio,contaminacio_original,reduccio_contaminacio
+Tarragona (Bonavista),17.09,1.5381000000000005
+Tarragona (Parc de la Ciutat),231.03,21.511266666666668
+Tarragona (Sant Salvador),11.94,1.0746
+Tarragona (Universitat Laboral),10.739999999999998,0.9666000000000001

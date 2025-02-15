@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mapa de Contaminación en Tarragona</title>
+    <title>Mapa de contaminació a Tarragona</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
@@ -95,6 +95,18 @@
         #ver-contaminacion:hover {
             background: #218838;
         }
+        #mostrar-prediccio {
+            background: #804bfc;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        #mostrar-prediccio:hover {
+            background: #6a3ab2;
+        }
         #selected-contaminant {
             margin-bottom: 10px;
             font-weight: bold;
@@ -105,7 +117,7 @@
 <body>
     <div id="controls">
         <div style="position: relative;">
-            <div id="contaminacion-dropdown">Seleccionar tipo de contaminación <i class="fas fa-chevron-down"></i></div>
+            <div id="contaminacion-dropdown">Seleccionar tipus de contaminació <i class="fas fa-chevron-down"></i></div>
             <ul id="contaminacion-options">
                 <li>CO</li>
                 <li>H2S</li>
@@ -119,7 +131,7 @@
                 <li>SO2</li>
             </ul>
         </div>
-        <div id="selected-contaminant">Tipo de contaminación seleccionado: Ninguno</div>
+        <div id="selected-contaminant">Tipus de contaminació seleccionat: Ningun</div>
         <div id="datetime-picker">
             <label for="date">Fecha:</label>
             <input type="date" id="date" name="date">
@@ -151,7 +163,10 @@
                 <option value="23">23</option>
             </select>
         </div>
-        <button id="ver-contaminacion">Ver Contaminación</button>
+        <button id="ver-contaminacion">Veure Contaminació</button>
+        <button id="mostrar-prediccio">Mostrar Predicció</button>
+        <button id="mostrar-reduccio">Mostrar Reducció</button>
+
     </div>
     <div id="map"></div>
     
@@ -185,14 +200,146 @@
         });
 
         document.getElementById('ver-contaminacion').addEventListener('click', function() {
-            var date = document.getElementById('date').value;
-            var hour = document.getElementById('hour').value;
-            if (selectedContaminant && date && hour) {
-                cargarDatos(selectedContaminant, date, hour);
-            } else {
-                alert('Por favor, selecciona el tipo de contaminación, fecha y hora.');
-            }
-        });
+    var date = document.getElementById('date').value;
+    var hour = document.getElementById('hour').value; // Afegim l'hora seleccionada
+    if (selectedContaminant && date && hour !== "") {
+        cargarDatos(selectedContaminant, date, hour);
+    } else {
+        alert('Selecciona el tipus de contaminació, la data i l\'hora.');
+    }
+});
+// Afegir esdeveniment per al botó "Mostrar Reducció"
+document.getElementById('mostrar-reduccio').addEventListener('click', function() {
+    carregarReduccio();
+});
+
+// Funció per carregar les dades del CSV de reducció de contaminació
+function carregarReduccio() {
+    console.log("Carregant CSV de reducció de contaminació...");
+    
+    Papa.parse('Sortida/reduccio_contaminacio_per_estacio.csv', {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+            console.log("Dades carregades:", results.data); // Comprovació de dades
+            mostrarReduccio(results.data);
+        },
+        error: function(error) {
+            console.error("Error carregant el CSV: ", error);
+        }
+    });
+}
+
+function obtenirMissatgeConcienciacio(reduccio) {
+    if (reduccio > 2) {
+        return "Gran millora en la qualitat de l'aire!";
+    } else if (reduccio > 1) {
+        return "Una millora notable en la contaminació!";
+    } else if (reduccio > 0.5) {
+        return "Alguna millora, però encara podem millorar!";
+    } else {
+        return "No hi ha reducció significativa en la contaminació.";
+    }
+}// Funció per obtenir l'icona del marcador en funció de la millora calculada
+function getIcon(valorOriginal, reduccio) {
+    var millora = valorOriginal - reduccio; // Calcula la millora com la diferència
+
+    let color;
+    if (millora > 5) {
+        color = "green"; // Gran millora
+    } else if (millora > 3) {
+        color = "yellow"; // Millora significativa
+    } else if (millora > 1) {
+        color = "orange"; // Millora petita
+    } else {
+        color = "red"; // Sense millora significativa
+    }
+
+    return L.divIcon({
+        className: 'custom-marker',
+        html: `<div style="
+            background-color: ${color};
+            border: 2px solid black;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 60px;">
+            ${millora.toFixed(1)} µg/m³
+        </div>`,
+        iconSize: [50, 25]
+    });
+}
+
+// Funció per mostrar la reducció amb interactivitat
+function mostrarReduccio(data) {
+    data.forEach(row => {
+        var estacio = row['estacio'];
+        var reduccio = parseFloat(row['reduccio_contaminacio']);
+        var valorOriginal = parseFloat(row['contaminacio_original']);  // Obtenir el valor original
+
+        if (!estacio || isNaN(reduccio) || isNaN(valorOriginal)) {
+            console.warn("Dada incorrecta:", row);
+            return;
+        }
+
+        var coordenades = obtenirCoordenades(estacio);
+        if (coordenades) {
+            var millora = valorOriginal - reduccio; // Calcular la millora
+
+            // Definir el missatge de conscienciació
+            var missatgeConcienciacio = obtenirMissatgeConcienciacio(millora);
+
+            // Afegim interactivitat als marcadors
+            L.marker([coordenades.lat, coordenades.lon], {
+                icon: getIcon(valorOriginal, reduccio)
+            }).addTo(map)
+                .bindPopup(`
+                    <b>${estacio}</b><br>
+                    Valor original: ${valorOriginal.toFixed(2)} µg/m³<br>
+                    Reducció: ${reduccio.toFixed(2)} µg/m³<br>
+                    Millora: ${millora.toFixed(2)} µg/m³<br>
+                    ${missatgeConcienciacio}
+                `)
+                .on('mouseover', function() {
+                    this.openPopup(); // Obre el popup quan el ratolí passa per sobre
+                })
+                .on('mouseout', function() {
+                    this.closePopup(); // Tanca el popup quan el ratolí es retira
+                });
+        } else {
+            console.warn("No s'han trobat coordenades per:", estacio);
+        }
+    });
+}
+
+// Funció per obtenir el missatge de conscienciació segons la millora
+function obtenirMissatgeConcienciacio(millora) {
+    if (millora > 5) {
+        return "Gran millora en la qualitat de l'aire!";
+    } else if (millora > 3) {
+        return "Millora notable en la contaminació!";
+    } else if (millora > 1) {
+        return "Alguna millora, però encara podem millorar!";
+    } else {
+        return "No hi ha millora significativa en la contaminació.";
+    }
+}
+
+
+// Funció per obtenir coordenades de l'estació (exemple)
+function obtenirCoordenades(estacio) {
+    var coordenades = {
+        "Tarragona (Bonavista)": { lat: 41.128, lon: 1.220 },
+        "Tarragona (Parc de la Ciutat)": { lat: 41.118, lon: 1.245 },
+        "Tarragona (Sant Salvador)": { lat: 41.162, lon: 1.231 },
+        "Tarragona (Universitat Laboral)": { lat: 41.138, lon: 1.256 }
+    };
+    return coordenades[estacio] || null;
+}
+
 
         function cargarDatos(contaminant, date, hour) {
             var datasets = [
@@ -232,39 +379,62 @@
             });
         }
 
-        function generarMapaCalor(data, hour) {
-            var heatData = [];
-            
-            data.forEach(function(row) {
-                var value = parseFloat(row['h' + hour]);
-                if (!isNaN(value)) {
-                    heatData.push([parseFloat(row.latitud), parseFloat(row.longitud), value]);
-                }
-            });
-
-            if (heatLayer) {
-                map.removeLayer(heatLayer);
-            }
-
-            heatLayer = L.heatLayer(heatData, { 
-                radius: 25, 
-                blur: 15, 
-                maxZoom: 17,
-                gradient: {
-                    0.1: 'blue',
-                    0.2: 'lime',
-                    0.4: 'yellow',
-                    0.6: 'orange',
-                    0.8: 'red'
-                }
-            }).addTo(map);
-
-            map.on('zoomend', function() {
-                var zoomLevel = map.getZoom();
-                var scale = 1 + (zoomLevel - 10) * 0.1;
-                heatLayer.setOptions({ radius: 25 * scale, blur: 15 * scale });
-            });
+        function mostrarPrediccion(date) {
+            alert("Mostrant predicció pel dia: " + date);
+            // Aquí podrías agregar el código para mostrar la predicción real
         }
+
+        function generarMapaCalor(data, hour) {
+    var heatData = [];
+
+    // Obtén los valores de contaminación para este contaminante y hora
+    var values = data.map(function(row) {
+        return parseFloat(row['h' + hour]);
+    }).filter(function(value) {
+        return !isNaN(value);
+    });
+
+    // Calcula los valores mínimo y máximo
+    var minValue = Math.min(...values);
+    var maxValue = Math.max(...values);
+
+    // Normaliza los valores de contaminación para que estén entre 0 y 1
+    data.forEach(function(row) {
+        var value = parseFloat(row['h' + hour]);
+        if (!isNaN(value)) {
+            var normalizedValue = (value - minValue) / (maxValue - minValue);  // Normaliza el valor
+            heatData.push([parseFloat(row.latitud), parseFloat(row.longitud), normalizedValue]);
+        }
+    });
+
+    // Si ya existe una capa de calor, elimínala
+    if (heatLayer) {
+        map.removeLayer(heatLayer);
+    }
+
+    // Crea una capa de calor con colores más intensos y un mayor rango de intensidad
+    heatLayer = L.heatLayer(heatData, {
+        radius: 50, // Aumenta el tamaño de los círculos
+        blur: 10, // Reduce el desenfoque
+        maxZoom: 17,
+        minOpacity: 0.2, // Aumenta la visibilidad de las áreas con baja contaminación
+        gradient: {
+            0.0: 'blue',
+            0.2: 'lime',
+            0.4: 'yellow',
+            0.6: 'orange',
+            0.8: 'red',
+            1.0: 'darkred' // Añadir un color más intenso para valores muy altos
+        }
+    }).addTo(map);
+
+    map.on('zoomend', function() {
+        var zoomLevel = map.getZoom();
+        var scale = 1 + (zoomLevel - 10) * 0.1;
+        heatLayer.setOptions({ radius: 30 * scale, blur: 10 * scale });
+    });
+}
+
     </script>
 </body>
 </html>
