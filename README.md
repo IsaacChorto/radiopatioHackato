@@ -1,114 +1,86 @@
-# Aplicació de Monitorització de Contaminació Ambiental
+# 📌 Nom del Prototip
 
-Aquesta aplicació web permet visualitzar la contaminació ambiental de la zona de Tarragona i consultar la seva predicció futura. Utilitza un mapa interactiu per mostrar els nivells de contaminació de diferents contaminants en temps real i permet a l'usuari obtenir consells útils per protegir la seva salut. Com tambe la funcio de veure la reduccio de la contaminacio en un dia especific.
+L’impacte invisible de la contaminació de l’aire. Una eina per entendre i millorar la qualitat de l’aire.
 
-## Característiques
+## 👥 Equip RADIOPATIO
 
-1. **Selecció de contaminant:**  
-   Permet a l'usuari seleccionar entre diferents tipus de contaminació, com CO, NO, O3, PM10, entre altres.
+### **Anna Aragoneses**
 
-2. **Mapa interactiu:**  
-   Utilitza el sistema de mapes de `Leaflet` per mostrar la ubicació de les estacions de mesura de contaminació i els nivells de contaminació mitjançant un mapa de calor (heatmap).
+[![Email](https://img.shields.io/badge/Email-<adreca-correu1>-blue)](mailto:<anna.aragoneses@estudiants.urv.cat>)
 
-3. **Predicció de contaminació:**  
-   Permet a l'usuari visualitzar la predicció de contaminació per a una data seleccionada. Les dades de contaminació són carregades des d'un arxiu CSV o des d'un servei backend (API).
+[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github1>-black?logo=github)](https://github.com/aragoneses)
 
-4. **Consells útils:**  
-   L'aplicació ofereix consells sobre com protegir-se de la contaminació, com evitar zones de trànsit dens o portar màscares en dies de contaminació elevada.
+### **Isaac Chortó** 
 
-5. **Gràfic d'evolució de contaminació:**  
-   L'aplicació genera un gràfic de línia interactiu que mostra l'evolució de la contaminació en un dia específic.
+[![Email](https://img.shields.io/badge/Email-<adreca-correu2>-blue)](mailto:<isaac.chorto@estudiants.urv.cat>)
 
-## Estructura de l'HTML
+[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github2>-black?logo=github)](https://github.com/IsaacChorto)
 
-L'estructura principal de l'HTML consta de:
 
-- **Controls:**  
-   Elements per seleccionar el tipus de contaminació, la data i els botons per visualitzar la contaminació actual i la predicció.
+### **Dounia Lakdimi**
 
-- **Mapa:**  
-   Un element on es renderitza el mapa interactiu utilitzant la biblioteca `Leaflet`.
+[![Email](https://img.shields.io/badge/Email-<adreca-correu3>-blue)](mailto:<dounia.lakdimi@estudiants.urv.cat>)
 
-- **Botó de consells:**  
-   Un botó per mostrar/ocultar els consells útils.
+[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github3>-black?logo=github)](https://github.com/Douuniia22)
 
-- **Gràfic d'evolució:**  
-   Un gràfic generat per la biblioteca `Plotly` que mostra l'evolució dels nivells de contaminació per hora.
 
-## Descripció de les funcionalitats
+### **Ivet Pallàs**  
 
-### 1. Selecció de contaminant
+[![Email](https://img.shields.io/badge/Email-<adreca-correu4>-blue)](mailto:<ivet.pallas@estudiants.urv.cat>)
 
-L'usuari pot seleccionar un contaminant de la llista dels principals contaminants de l'aire, com ara:
+[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github4>-black?logo=github)](https://github.com/iveet8)
 
-- CO
-- H2S
-- NO
-- NO2
-- NOX
-- O3
-- PM1
-- PM10
-- PM2.5
-- SO2
 
-### 2. Visualització del mapa de calor
+## ❓ Problema abordat
 
-Un cop seleccionat el contaminant i la data, es genera un mapa de calor que mostra les estacions de mesura i els nivells de contaminació per a la data seleccionada. Els nivells de contaminació s'assignen a colors segons la intensitat de la contaminació, des de blau (baix nivell) fins a vermell (alt nivell).
+Concentracions de contaminants superiors als límits de salut: Al Port de Tarragona, s’han registrat concentracions de contaminants cancerígens a l’aire centenars de vegades per sobre dels límits establerts per a la salut. 
 
-### 3. Predicció de contaminació
+Superació dels límits de partícules en suspensió (PM₁₀): L’estació de mesurament del Port va registrar una mitjana de 70,09 µg/m³ de PM₁₀ el 28 de juny de 2019, molt per sobre del límit màxim permès de 50 µg/m³.
 
-L'aplicació carrega un fitxer CSV amb les dades històriques de contaminació o fa una consulta a un backend amb un model d'entrenament per obtenir la predicció de contaminació en temps real.
+Emissions industrials significatives: Les indústries químiques i petroquímiques de Tarragona contribueixen a altes emissions de contaminants com el diòxid de nitrogen (NO₂) i el diòxid de carboni (CO₂), afectant la qualitat de l’aire i la salut de la població.
 
-### 4. Consells útils
+## 💡 La nostra solució
 
-Quan l'usuari fa clic al botó "Consells", s'obre una finestra amb consells per protegir-se de la contaminació, com evitar zones amb trànsit dens o utilitzar màscares.
+El nostre projecte ofereix un **mapa interactiu de la contaminació a Tarragona** que permet visualitzar en temps real els nivells de diferents contaminants atmosfèrics. La nostra eina proporciona:
 
-### 5. Gràfic d'evolució
-
-El gràfic interactiu mostra com evolucionen els nivells de contaminació en un període de temps específic (per exemple, a les 12:00). Aquest gràfic es genera utilitzant la biblioteca `Plotly`.
-
-## Com fer servir l'aplicació
-
-1. **Selecció de contaminant:**  
-   Fes clic a la llista desplegable de contaminació i selecciona el tipus de contaminant que vols monitoritzar.
-
-2. **Selecciona una data:**  
-   Escull una data per la qual vols veure les dades de contaminació.
-
-3. **Visualitza la contaminació actual:**  
-   Prem el botó "Veure Contaminació" per veure els nivells de contaminació de l'aire en temps real.
-
-4. **Visualitza la predicció:**  
-   Prem el botó "Mostrar Predicció" per veure la predicció de contaminació per a la data seleccionada.
-
-5. **Consulta consells útils:**  
-   Fes clic al botó "Consejos" per veure una llista de recomanacions per protegir-te de la contaminació.
-
-6. **Consulta l'evolució de la contaminació:**  
-   El gràfic interactiu mostra l'evolució dels nivells de contaminació a l'hora seleccionada.
-
-## Requisits
-
-- **Leaflet** per al mapa interactiu.
-- **Plotly** per a la generació de gràfics.
-- **PapaParse** per a la manipulació de fitxers CSV.
-- **Backend (API)** per a la predicció de contaminació (opcional).
-
-## Instal·lació
-
-1. Descarrega o clona el repositori.
-2. Obre l'arxiu `index.html` en un navegador compatible amb JavaScript.
-
-## Notes
-
-- Les dades de contaminació es carreguen des de fitxers CSV. Assegura't que els fitxers estan disponibles a les rutes especificades.
-- Aquesta aplicació pot requerir una connexió a internet per carregar les dades en temps real o per obtenir prediccions des d'un backend.
-
-## Contribucions
-
-Les contribucions són benvingudes. Si tens suggeriments o millores, si us plau, obre un "issue" o envia una "pull request".
+- **Visualització en un mapa** dels nivells de contaminació a diferents punts de la ciutat.
+- **Prediccions de contaminació** per als pròxims dies basades en models de dades.
+- **Selecció de contaminants** per personalitzar la informació mostrada.
+- **Interfície intuïtiva i fàcil d’usar** per a ciutadans i autoritats mediambientals.
 
 ---
 
-*Creat per RADIOPATIO.*
+## 🛠️ Tecnologies utilitzades
+
+- **Frontend:** HTML, CSS, JavaScript, Leaflet.js per a la visualització del mapa interactiu.
+- **Backend:** Python per al processament de dades i generació de prediccions.
+- **Base de dades:** CSV amb informació de contaminació.
+- **Llibreries:** Leaflet-heatmap per representar la contaminació, PapaParse per gestionar arxius CSV.
+
+---
+
+## ☁️ Sistema Implementat
+
+El sistema es compon de:
+
+1. **Interfície web:** Permet als usuaris seleccionar un contaminant i veure la seva distribució en un mapa de calor.
+2. **Sistema de predicció:** Analitza dades històriques i realitza estimacions per dies futurs.
+3. **Gestió de dades:** Recull informació de diferents estacions de mesurament per proporcionar dades precises.
+
+---
+
+## 🌍 Impacte del projecte
+
+- **Empoderament ciutadà:** Facilita l’accés a informació sobre la qualitat de l’aire.
+- **Sensibilització ambiental:** Conscienciació sobre la importància de reduir la contaminació.
+- **Millora de la gestió ambiental:** Pot ajudar les autoritats a implementar mesures correctives més eficients.
+
+---
+
+## 🙌 Agraïments i conclusió
+
+Aquest projecte ha estat desenvolupat en el marc de la **Hackató Cloud Computing 2025**, organitzada per la **Universitat Rovira i Virgili** i **T-Systems**. 
+
+Gràcies a tots els participants i mentors que han fet possible aquest projecte!
+
+🚀 **RADIOPATIO Fem un pas cap a un futur amb aire més net!**
