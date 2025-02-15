@@ -67,7 +67,7 @@ def extraccio_dades(dia, mes, any):
     estacions = dades_resultants["nom_estacio"].unique()
 
     for estacio in estacions:
-        print(f"🔹 Processant estació: {estacio}")
+        print(f" Processant estació: {estacio}")
 
         # Filtrar dades per estació
         dades_estacio = dades_resultants[dades_resultants["nom_estacio"] == estacio].copy()
@@ -124,5 +124,5 @@ def extraccio_dades(dia, mes, any):
     csv_path = os.path.join(sortida_path, "prediccions_contaminacio.csv")
     df_prediccions.to_csv(csv_path, index=False)
 
-    print(f"\n📂 Prediccions guardades a: {csv_path}")
+    print(f"\n Prediccions guardades a: {csv_path}")
 
