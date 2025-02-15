@@ -236,9 +236,9 @@
                 <li>SO2</li>
             </ul>
         </div>
-        <div id="selected-contaminant">Tipus de contaminació seleccionat: Ningun</div>
+        <div id="selected-contaminant">Tipus de contaminació seleccionat: Cap</div>
         <div id="datetime-picker">
-            <label for="date">Fecha:</label>
+            <label for="date">Data:</label>
             <input type="date" id="date" name="date">
         </div>
         <button id="ver-contaminacion">Veure Contaminació</button>
@@ -299,7 +299,7 @@
         document.querySelectorAll('#contaminacion-options li').forEach(function (item) {
             item.addEventListener('click', function () {
                 selectedContaminant = this.innerText;
-                document.getElementById('selected-contaminant').innerText = 'Tipo de contaminación seleccionado: ' + selectedContaminant;
+                document.getElementById('selected-contaminant').innerText = 'Tipus de contaminació seleccionada: ' + selectedContaminant;
                 document.getElementById('contaminacion-options').style.display = 'none';
             });
         });
