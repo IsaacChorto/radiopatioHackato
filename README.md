@@ -6,29 +6,28 @@ L’impacte invisible de la contaminació de l’aire. Una eina per entendre i m
 
 ### **Anna Aragoneses**
 
-[![Email](https://img.shields.io/badge/Email-<adreca-correu1>-blue)](mailto:<anna.aragoneses@estudiants.urv.cat>)
+[![Email](https://img.shields.io/badge/Email-anna.aragoneses@estudiants.urv.cat-blue)](mailto:anna.aragoneses@estudiants.urv.cat)
 
-[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github1>-black?logo=github)](https://github.com/aragoneses)
+[![GitHub](https://img.shields.io/badge/GitHub-aragoneses-black?logo=github)](https://github.com/aragoneses)
 
 ### **Isaac Chortó** 
 
-[![Email](https://img.shields.io/badge/Email-<adreca-correu2>-blue)](mailto:<isaac.chorto@estudiants.urv.cat>)
+[![Email](https://img.shields.io/badge/Email-isaac.chorto@estudiants.urv.cat-blue)](mailto:isaac.chorto@estudiants.urv.cat)
 
-[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github2>-black?logo=github)](https://github.com/IsaacChorto)
-
+[![GitHub](https://img.shields.io/badge/GitHub-IsaacChorto-black?logo=github)](https://github.com/IsaacChorto)
 
 ### **Dounia Lakdimi**
 
-[![Email](https://img.shields.io/badge/Email-<adreca-correu3>-blue)](mailto:<dounia.lakdimi@estudiants.urv.cat>)
+[![Email](https://img.shields.io/badge/Email-dounia.lakdimi@estudiants.urv.cat-blue)](mailto:dounia.lakdimi@estudiants.urv.cat)
 
-[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github3>-black?logo=github)](https://github.com/Douuniia22)
-
+[![GitHub](https://img.shields.io/badge/GitHub-Douuniia22-black?logo=github)](https://github.com/Douuniia22)
 
 ### **Ivet Pallàs**  
 
-[![Email](https://img.shields.io/badge/Email-<adreca-correu4>-blue)](mailto:<ivet.pallas@estudiants.urv.cat>)
+[![Email](https://img.shields.io/badge/Email-ivet.pallas@estudiants.urv.cat-blue)](mailto:ivet.pallas@estudiants.urv.cat)
 
-[![GitHub](https://img.shields.io/badge/GitHub-<nom-usuari-github4>-black?logo=github)](https://github.com/iveet8)
+[![GitHub](https://img.shields.io/badge/GitHub-iveet8-black?logo=github)](https://github.com/iveet8)
+
 
 
 ## ❓ Problema abordat
